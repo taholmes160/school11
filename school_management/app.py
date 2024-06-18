@@ -1,6 +1,6 @@
-from flask import Flask
-from models import db
-from users import users_bp
+from flask import Flask, redirect, url_for
+from school_management.models import db
+from school_management.users import users_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -10,5 +10,12 @@ db.init_app(app)
 
 app.register_blueprint(users_bp)
 
+@app.route('/')
+def index():
+    return redirect(url_for('users.home'))
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+
+
+
