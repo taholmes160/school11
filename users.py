@@ -7,4 +7,3 @@ users_bp = Blueprint('users', __name__)
 def user_list():
     users = db.session.query(User).all()
     return render_template('users_list.html', users=users)
-
