@@ -1,11 +1,16 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, abort
-from flask_login import login_user, current_user, login_required, logout_user
+from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from werkzeug.security import check_password_hash
 from school_management.models import db, User
 from school_management.forms import LoginForm
 
 users_bp = Blueprint('users', __name__, url_prefix='/users')
+# Initialize the LoginManager object
+login_manager = LoginManager()
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 @users_bp.route('/')
 def home():
     return render_template('home.html')
